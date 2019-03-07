@@ -20,11 +20,43 @@
     <TopLevelEntity>hello_world</TopLevelEntity>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="ALU.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
+    <Content Include="Control.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
     <Content Include="hello.vhd">
       <SubType>Content</SubType>
       <NeedsCodeFormatting>true</NeedsCodeFormatting>
       <ContentTypeProperty>Vhdl</ContentTypeProperty>
       <LibraryName>work</LibraryName>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
+    <Content Include="Mux_2_To_1.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
+    <Content Include="RegisterMemory.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
       <NamingCheck>True</NamingCheck>
       <ParsingOptions>FullParse</ParsingOptions>
       <NotificationLevel>All</NotificationLevel>
