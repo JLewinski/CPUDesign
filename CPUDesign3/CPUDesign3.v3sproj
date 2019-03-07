@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Syntax Check</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <RootNamespace>Work</RootNamespace>
+    <AssemblyName>CPUDesign3</AssemblyName>
+    <ProjectGuid>{57791927-2CD2-4346-8A27-A2725836BD19}</ProjectGuid>
+    <V3S-Project-Type>V3S Project</V3S-Project-Type>
+    <Name>CPUDesign3</Name>
+    <ProjectFolder>C:\Users\jdlew\source\repos\CPUDesign3\CPUDesign3</ProjectFolder>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Syntax Check' ">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Full Compilation' ">
+    <OutputPath>.</OutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TopLevelEntity>hello_world</TopLevelEntity>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="hello.vhd">
+      <SubType>Content</SubType>
+      <NeedsCodeFormatting>true</NeedsCodeFormatting>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <LibraryName>work</LibraryName>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <!-- insertExternalFiles !-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+</Project>

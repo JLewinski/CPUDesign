@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.421
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{57791927-2CD2-4346-8A27-A2725836BD19}") = "CPUDesign3", "CPUDesign3\CPUDesign3.v3sproj", "{D285AE7D-614E-4789-A82E-E907001FCD41}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Full Compilation|Default = Full Compilation|Default
+		Syntax Check|Default = Syntax Check|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D285AE7D-614E-4789-A82E-E907001FCD41}.Full Compilation|Default.ActiveCfg = Full Compilation
+		{D285AE7D-614E-4789-A82E-E907001FCD41}.Full Compilation|Default.Build.0 = Full Compilation
+		{D285AE7D-614E-4789-A82E-E907001FCD41}.Syntax Check|Default.ActiveCfg = Syntax Check
+		{D285AE7D-614E-4789-A82E-E907001FCD41}.Syntax Check|Default.Build.0 = Syntax Check
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {84804315-D25E-4FFD-9C32-34629A226EF8}
+	EndGlobalSection
+EndGlobal
