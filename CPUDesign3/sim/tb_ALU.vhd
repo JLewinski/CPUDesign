@@ -19,6 +19,7 @@ architecture rtl_sim of tb_ALU is
     signal i_dataA: STD_LOGIC_VECTOR(15 downto 0);
     signal i_dataB: STD_LOGIC_VECTOR(15 downto 0);
     signal o_data: STD_LOGIC_VECTOR(15 downto 0);
+    signal output: STD_LOGIC_VECTOR(15 downto 0);
 
 begin
     --testOutput <= o_data;
@@ -44,6 +45,7 @@ begin
                 for k in 0 to 5 loop
                     i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(k * 3 + 1, 16));
                     wait until falling_edge(CLK);
+                    output <= o_data;
                 end loop;
             end loop;
             for j in 16#FFFF# downto 16#FFF0# loop

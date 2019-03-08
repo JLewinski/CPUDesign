@@ -24,29 +24,24 @@ begin
     selDest  <= ctrlOutput(2);
     aluOut <= ctrlOutput(1 downto 0);
 
-    process(CLK) is
+    process(CLK, instruction) is
     begin
         if (rising_edge(CLK)) then
             if RST = '1' then
                 ctrlOutput <= (others => '0');
             else
-                with(instruction) select
-                ctrlOutput <=   "000001100" when "0000",
-                                "000001101" when "0001",
-                                "000001110" when "0010",
-                                "000001111" when "0011",
-                                "001011000" when "0100",
-                                "00X110X00" when "0101",
-                                "000011100" when "0110",
-                                --"XXXXXXXXX" when "0111",
-                                "01X010X01" when "1000",
-                                "10X0X0XXX" when "1001",
-                                --"XXXXXXXXX" when "1010",
-                                --"XXXXXXXXX" when "1011",
-                                --"XXXXXXXXX" when "1100",
-                                --"XXXXXXXXX" when "1101",
-                                --"XXXXXXXXX" when "1110",
-                                "000000000" when others;
+                case instruction is
+                    when "0000" => ctrlOutput <= "000001100";
+                    when "0001" => ctrlOutput <= "000001101";
+                    when "0010" => ctrlOutput <= "000001110";
+                    when "0011" => ctrlOutput <= "000001111";
+                    when "0100" => ctrlOutput <= "001011000";
+                    when "0101" => ctrlOutput <= "00X110X00";
+                    when "0110" => ctrlOutput <= "000011100";
+                    when "1000" => ctrlOutput <= "01X010X01";
+                    when "1001" => ctrlOutput <= "10X0X0XXX";
+                    when others => ctrlOutput <= "000000000";
+                end case;
             end if;
         end if;
     end process;

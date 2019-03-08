@@ -17,18 +17,20 @@ begin
     dataA <= signed(i_dataA);
     dataB <= signed(i_dataB);
     o_data <= std_logic_vector(dataOut);
-    
-    process (CLK, RST)
+
+    process (CLK, SEL)
     begin
         if rising_edge(CLK) then
             if RST = '1' then
                 dataOut <= (others => '0');
             else
-                with(SEL) select
-                dataOut <=  dataA + dataB when "00",
-                           dataA - dataB when "01",
-                           dataA and dataB when "10",
-                           dataA or dataB when "11";
+                case SEL is
+                    when "00" => o_data <= std_logic_vector(dataA + dataB);
+                    when "01"=> o_data <= std_logic_vector(dataA - dataB);
+                    when "10"=> o_data <= std_logic_vector(dataA and dataB);
+                    when "11"=> o_data <= std_logic_vector(dataA or dataB);
+                    when others => o_data <= (others => '0');
+                end case;
             end if;
         end if;
     end process;
