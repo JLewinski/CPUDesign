@@ -34,8 +34,8 @@ begin
 
     stimuli_p: process is
     begin
-        wait for falling_edge(RST);
-        wait for falling_edge(CLK);
+        wait until falling_edge(RST);
+        wait until falling_edge(CLK);
         
         for i in 0 to 3 loop
             SEL <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 2));
@@ -43,21 +43,21 @@ begin
                 i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(j * 3, 16));
                 for k in 0 to 5 loop
                     i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(k * 3 + 1, 16));
-                    wait for falling_edge(CLK);
+                    wait until falling_edge(CLK);
                 end loop;
             end loop;
             for j in 16#FFFF# downto 16#FFF0# loop
                 i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(j, 16));
                 for k in 0 to 5 loop
                     i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(k * 3 + 1, 16));
-                    wait for falling_edge(CLK);
+                    wait until falling_edge(CLK);
                 end loop;
             end loop;
             for j in 16#FFFF# downto 16#FFF0# loop
                 i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(j, 16));
                 for k in 16#FFFF# downto 16#FFF0# loop
                     i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(k - 4, 16));
-                    wait for falling_edge(CLK);
+                    wait until falling_edge(CLK);
                 end loop;
             end loop;
         end loop;

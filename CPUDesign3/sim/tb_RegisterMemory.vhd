@@ -47,8 +47,8 @@ begin
         DataIn <= (others => '0');
         DestAddr <= (others => '0');
         
-        wait for falling_edge(RST);
-        wait for falling_edge(CLK);
+        wait until falling_edge(RST);
+        wait until falling_edge(CLK);
         
         WriteEn <= '1';
         for i in 0 to 16#FFFF# loop

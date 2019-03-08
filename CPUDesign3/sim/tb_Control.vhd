@@ -43,12 +43,12 @@ begin
 
     stimuli_p: process is
     begin
-        wait for falling_edge(RST);
-        wait for falling_edge(CLK);
+        wait until falling_edge(RST);
+        wait until falling_edge(CLK);
 
         for i in 0 to 15 loop
             instruction <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 4));
-            wait for falling_edge(CLK);
+            wait until falling_edge(CLK);
         end loop;
 
         wait;
