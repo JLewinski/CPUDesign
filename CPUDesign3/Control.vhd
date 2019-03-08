@@ -4,7 +4,7 @@ library ieee;
 entity Control is
     port(
         instruction :in std_logic_vector (3 downto 0);
-        clk, rst :in std_logic;
+        CLK, RST :in std_logic;
         jump, branch, mem2Reg, memW, ri, regW, selDest :out std_logic;
         aluOut : out std_logic_vector(1 downto 0)
     );
@@ -24,10 +24,10 @@ begin
     selDest  <= ctrlOutput(2);
     aluOut <= ctrlOutput(1 downto 0);
 
-    process(clk) is
+    process(CLK) is
     begin
-        if (rising_edge(clk)) then
-            if rst = '1' then
+        if (rising_edge(CLK)) then
+            if RST = '1' then
                 ctrlOutput <= (others => '0');
             else
                 with(instruction) select

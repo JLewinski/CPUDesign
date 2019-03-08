@@ -4,7 +4,7 @@
 
 entity ALU is
     port(
-        i_setting :in std_logic_vector(1 downto 0);
+        SEL :in std_logic_vector(1 downto 0);
         CLK, RST :in std_logic;
         i_dataA, i_dataB :in STD_LOGIC_VECTOR(15 downto 0);
         o_data :out STD_LOGIC_VECTOR(15 downto 0)
@@ -24,7 +24,7 @@ begin
             if RST = '1' then
                 dataOut <= (others => '0');
             else
-                with(i_setting) select
+                with(SEL) select
                 dataOut <=  dataA + dataB when "00",
                            dataA - dataB when "01",
                            dataA and dataB when "10",

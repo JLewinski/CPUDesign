@@ -21,7 +21,7 @@ architecture behavior of top is
     component ALU is
         port(
             CLK, RST :in std_logic;
-            i_setting :in std_logic_vector(1 downto 0);
+            SEL :in std_logic_vector(1 downto 0);
             i_dataA, i_dataB :in STD_LOGIC_VECTOR(15 downto 0);
             o_data :out STD_LOGIC_VECTOR(15 downto 0)
         );
@@ -30,36 +30,32 @@ architecture behavior of top is
     component Control is
         port(
             instruction :in std_logic_vector (3 downto 0);
-            clk, rst :in std_logic;
+            CLK, RST :in std_logic;
             jump, branch, mem2Reg, memW, ri, regW, selDest :out std_logic;
             aluOut : out std_logic_vector(1 downto 0)
         );
     end component;
 
-    --component Memory is
-    --    generic (
-    --        DATA_WIDTH        : integer := 16;
-    --        ADDRESS_WIDTH    : integer := 16
-    --    );
-    --    port ( 
-    --        CLK     : in  STD_LOGIC;
-    --        Reset     : in  STD_LOGIC;
-    --        DataIn     : in  STD_LOGIC_VECTOR (DATA_WIDTH - 1 downto 0);
-    --        Address    : in  STD_LOGIC_VECTOR (ADDRESS_WIDTH - 1 downto 0);
-    --        WriteEn    : in  STD_LOGIC;
-    --        Enable     : in  STD_LOGIC;
-    --        DataOut     : out STD_LOGIC_VECTOR (DATA_WIDTH - 1 downto 0)
-    --    );
-    --end component;
-    
-    component FullMemory is
+    component Memory is
         port ( 
-            CLK, WE, RST        : in  STD_LOGIC;
-            DataIn              : in  STD_LOGIC_VECTOR (15 downto 0);
-            InstAddr, DataAddr  : in  STD_LOGIC_VECTOR (15 downto 0);
-            InstOut, DataOut     : out STD_LOGIC_VECTOR (15 downto 0)
+            CLK     : in  STD_LOGIC;
+            Reset     : in  STD_LOGIC;
+            DataIn     : in  STD_LOGIC_VECTOR (15 downto 0);
+            Address    : in  STD_LOGIC_VECTOR (15 downto 0);
+            WriteEn    : in  STD_LOGIC;
+            Enable     : in  STD_LOGIC;
+            DataOut     : out STD_LOGIC_VECTOR (15 downto 0)
         );
     end component;
+    
+    --component FullMemory is
+    --    port ( 
+    --        CLK, WE, RST        : in  STD_LOGIC;
+    --        DataIn              : in  STD_LOGIC_VECTOR (15 downto 0);
+    --        InstAddr, DataAddr  : in  STD_LOGIC_VECTOR (15 downto 0);
+    --        InstOut, DataOut     : out STD_LOGIC_VECTOR (15 downto 0)
+    --    );
+    --end component;
 
     component RegisterMemory is
         generic (
@@ -79,7 +75,7 @@ architecture behavior of top is
             d_WIDTH : integer := 1
         );
         port(
-            i_Select, CLK, RST :in std_logic;
+            SEL, CLK, RST :in std_logic;
             i_Data1, i_Data2 :in std_logic_vector(d_WIDTH downto 0);
             o_Data :out std_logic_vector(d_WIDTH downto 0)
         );
@@ -135,19 +131,19 @@ begin
         RST => RST,
         dataOut => pcOut);
     
-    --InstructionMemory: Memory port map(
-    --    CLK => fstCLK,
-    --    Reset => RST,
-    --    DataIn => "0000000000000000",
-    --    Address => pcOut,
-    --    WriteEn => '0',
-    --    Enable => '1',
-    --    DataOut => instruction);
+    InstructionMemory: Memory port map(
+        CLK => fstCLK,
+        Reset => RST,
+        DataIn => "0000000000000000",
+        Address => pcOut,
+        WriteEn => '0',
+        Enable => '1',
+        DataOut => instruction);
     
     CTRL: Control port map(
         instruction => instruction(15 downto 12),
-        clk => fstCLK,
-        rst => RST,
+        CLK => fstCLK,
+        RST => RST,
         jump => jump,
         branch => branch,
         mem2Reg => mem2Reg,
@@ -158,7 +154,7 @@ begin
         aluOut => aluSetting);
     
     DestRegMux: Mux_2_To_1 generic map(d_WIDTH => 16) port map(
-        i_Select => selDest,
+        SEL => selDest,
         CLK => fstCLK,
         RST => RST,
         i_Data1 => instruction(7 downto 4),
@@ -177,7 +173,7 @@ begin
         DataOutB => regB);
     
     ConstMux: Mux_2_To_1 generic map(d_WIDTH => 4) port map(
-        i_Select => branch,
+        SEL => branch,
         CLK => fstCLK,
         RST => RST,
         i_Data1 => instruction(3 downto 0),
@@ -185,7 +181,7 @@ begin
         o_Data => constValue);
     
     ALUMux: Mux_2_To_1 generic map(d_WIDTH => 16) port map(
-        i_Select => ri,
+        SEL => ri,
         CLK => fstCLK,
         RST => RST,
         i_Data1 => regB,
@@ -193,24 +189,24 @@ begin
         o_Data => aluIn2);
     
     FullALU: ALU port map(
-        i_setting => aluSetting,
+        SEL => aluSetting,
         CLK => fstCLK,
         RST => RST,
         i_dataA => regA,
         i_dataB => aluIn2,
         o_data => aluResult);
     
-    --DataMemory: Memory port map(
-    --    CLK => fstCLK,
-    --    Reset => RST,
-    --    DataIn => regB,
-    --    Address => aluResult,
-    --    WriteEn => memW,
-    --    Enable => '1',
-    --    DataOut => memOut);
+    DataMemory: Memory port map(
+        CLK => fstCLK,
+        Reset => RST,
+        DataIn => regB,
+        Address => aluResult,
+        WriteEn => memW,
+        Enable => '1',
+        DataOut => memOut);
     
     DataMux : Mux_2_To_1 generic map(d_WIDTH => 16) port map(
-        i_Select => mem2Reg,
+        SEL => mem2Reg,
         CLK => fstCLK,
         RST => RST,
         i_Data1 => aluResult,
@@ -221,7 +217,7 @@ begin
     instructionExt(1 downto 0) <= "00";
     
     AddressAdder : ALU port map(
-        i_setting => "00",
+        SEL => "00",
         CLK => fstCLK,
         RST => RST,
         i_dataA => instructionExt,
@@ -229,7 +225,7 @@ begin
         o_data => pcALUOut);
     
     PCAdder : ALU port map(
-        i_setting => "00",
+        SEL => "00",
         CLK => fstCLK,
         RST => RST,
         i_dataA => pcOut,
@@ -237,7 +233,7 @@ begin
         o_data => pcPlus4);
     
     PCCalcMux: Mux_2_To_1 generic map(d_WIDTH => 16) port map(
-        i_Select => branch,
+        SEL => branch,
         CLK => fstCLK,
         RST => RST,
         i_Data1 => pcPlus4,
@@ -249,7 +245,7 @@ begin
     pcExt(1 downto 0) <= "00";
     
     PCMux : Mux_2_To_1 generic map(d_WIDTH => 16) port map(
-        i_Select => jump,
+        SEL => jump,
         CLK => fstCLK,
         RST => RST,
         i_Data1 => calcPC,
@@ -257,13 +253,13 @@ begin
         o_Data => pcIn);
 
     
-    Mem: FullMemory port map(
-        CLK => fstCLK,
-        WE => memW,
-        RST => RST,
-        DataIn => regB,
-        InstAddr => pcOut,
-        DataAddr => aluResult,
-        InstOut => instruction,
-        DataOut => memOut);
+    --Mem: FullMemory port map(
+    --    CLK => fstCLK,
+    --    WE => memW,
+    --    RST => RST,
+    --    DataIn => regB,
+    --    InstAddr => pcOut,
+    --    DataAddr => aluResult,
+    --    InstOut => instruction,
+    --    DataOut => memOut);
 end architecture;

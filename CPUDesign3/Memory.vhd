@@ -3,23 +3,19 @@ library IEEE;
     use IEEE.NUMERIC_STD.all;
 
 entity Memory is
-    generic (
-        DATA_WIDTH        : integer := 16;
-        ADDRESS_WIDTH    : integer := 16
-    );
     port ( 
         CLK     : in  STD_LOGIC;
         Reset     : in  STD_LOGIC;
-        DataIn     : in  STD_LOGIC_VECTOR (DATA_WIDTH - 1 downto 0);
-        Address    : in  STD_LOGIC_VECTOR (ADDRESS_WIDTH - 1 downto 0);
+        DataIn     : in  STD_LOGIC_VECTOR (15 downto 0);
+        Address    : in  STD_LOGIC_VECTOR (15 downto 0);
         WriteEn    : in  STD_LOGIC;
         Enable     : in  STD_LOGIC;
-        DataOut     : out STD_LOGIC_VECTOR (DATA_WIDTH - 1 downto 0)
+        DataOut     : out STD_LOGIC_VECTOR (15 downto 0)
     );
 end Memory;
 
 architecture Behavioral of Memory is
-    type Memory_Array is array ((2 ** ADDRESS_WIDTH) - 1 downto 0) of STD_LOGIC_VECTOR (DATA_WIDTH - 1 downto 0);
+    type Memory_Array is array ((2 ** 16) - 1 downto 0) of STD_LOGIC_VECTOR (15 downto 0);
     signal Memory : Memory_Array;
 begin
 
