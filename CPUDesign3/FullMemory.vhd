@@ -22,8 +22,8 @@ begin
                 InstOut <= (others => '0');
                 DataOut <= (others  => '0');
             else
-                InstOut <= Memory(InstAddr);
-                DataOut <= Memory(DataAddr);
+                InstOut <= Memory(to_integer(unsigned(InstAddr)));
+                DataOut <= Memory(to_integer(unsigned(DataAddr)));
             end if;
         end if;
     end process;
