@@ -6,7 +6,7 @@ entity ALU is
     port(
         i_setting :in std_logic_vector(1 downto 0);
         CLK, RST :in std_logic;
-        i_dataA, i_DataB :in STD_LOGIC_VECTOR(15 downto 0);
+        i_dataA, i_dataB :in STD_LOGIC_VECTOR(15 downto 0);
         o_data :out STD_LOGIC_VECTOR(15 downto 0)
     );
 end entity ALU;
@@ -25,10 +25,10 @@ begin
                 dataOut <= (others => '0');
             else
                 with(i_setting) select
-                dataOut <=  dataA + DataB when "00",
-                           dataA - DataB when "01",
-                           dataA and DataB when "10",
-                           dataA or DataB when "11";
+                dataOut <=  dataA + dataB when "00",
+                           dataA - dataB when "01",
+                           dataA and dataB when "10",
+                           dataA or dataB when "11";
             end if;
         end if;
     end process;

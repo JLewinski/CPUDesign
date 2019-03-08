@@ -22,7 +22,7 @@ architecture behavior of top is
         port(
             CLK, RST :in std_logic;
             i_setting :in std_logic_vector(1 downto 0);
-            i_dataA, i_DataB :in STD_LOGIC_VECTOR(15 downto 0);
+            i_dataA, i_dataB :in STD_LOGIC_VECTOR(15 downto 0);
             o_data :out STD_LOGIC_VECTOR(15 downto 0)
         );
     end component;
@@ -111,7 +111,7 @@ architecture behavior of top is
     signal memOut : STD_LOGIC_VECTOR(15 downto 0);
 
 begin
-    output <= PCout;
+    output <= pcOut;
 
     fst_clk_process :process
     begin
@@ -157,7 +157,7 @@ begin
         selDest => selDest,
         aluOut => aluSetting);
     
-    DestRegMux: Mux_2_To_1 generic map(d_Width => 16) port map(
+    DestRegMux: Mux_2_To_1 generic map(d_WIDTH => 16) port map(
         i_Select => selDest,
         CLK => fstCLK,
         RST => RST,
@@ -176,7 +176,7 @@ begin
         DataOutA => regA,
         DataOutB => regB);
     
-    ConstMux: Mux_2_To_1 generic map(d_Width => 4) port map(
+    ConstMux: Mux_2_To_1 generic map(d_WIDTH => 4) port map(
         i_Select => branch,
         CLK => fstCLK,
         RST => RST,
@@ -184,7 +184,7 @@ begin
         i_Data2 => "0000",
         o_Data => constValue);
     
-    ALUMux: Mux_2_To_1 generic map(d_Width => 16) port map(
+    ALUMux: Mux_2_To_1 generic map(d_WIDTH => 16) port map(
         i_Select => ri,
         CLK => fstCLK,
         RST => RST,
@@ -261,7 +261,7 @@ begin
         CLK => fstCLK,
         WE => memW,
         RST => RST,
-        DataIn => RegB,
+        DataIn => regB,
         InstAddr => pcOut,
         DataAddr => aluResult,
         InstOut => instruction,
