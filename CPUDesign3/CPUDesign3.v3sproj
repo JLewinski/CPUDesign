@@ -84,6 +84,46 @@
       <ParsingOptions>FullParse</ParsingOptions>
       <NotificationLevel>All</NotificationLevel>
     </Content>
+    <Content Include="sim\tb_ALU.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
+    <Content Include="sim\tb_Control.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
+    <Content Include="sim\tb_Mux_2_To_1.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
+    <Content Include="sim\tb_Register16.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
+    <Content Include="sim\tb_RegisterMemory.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
     <Content Include="top.vhd">
       <SubType>Content</SubType>
       <LibraryName>work</LibraryName>
@@ -94,6 +134,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="sim\" />
   </ItemGroup>
   <!-- insertExternalFiles !-->
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

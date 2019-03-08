@@ -1,0 +1,57 @@
+library ieee;
+use ieee.std_logic_1164.all;
+use ieee.NUMERIC_STD.all;
+
+library std;
+use std.textio.all;
+
+entity tb_ALU is
+end entity;
+
+architecture rtl_sim of tb_ALU is
+
+constant CLK_PERIOD: time := 40 ns;
+constant RST_HOLD_DURATION: time := 200 ns;
+signal SEL: std_logic_vector(1 downto 0);
+signal CLK: std_logic;
+signal RST: std_logic;
+signal i_dataA: STD_LOGIC_VECTOR(15 downto 0);
+signal i_dataB: STD_LOGIC_VECTOR(15 downto 0);
+signal o_data: STD_LOGIC_VECTOR(15 downto 0);
+
+begin
+
+ALU_inst: entity work.ALU
+port map (
+        SEL     => SEL,
+        CLK     => CLK,
+        RST     => RST,
+        i_dataA => i_dataA,
+        i_dataB => i_dataB,
+        o_data  => o_data
+    );
+
+stimuli_p: process is
+begin
+wait;
+end process;
+
+clock_p: process is
+begin
+CLK <= '0';
+wait for CLK_PERIOD / 2;
+CLK <= '1';
+wait for CLK_PERIOD / 2;
+end process;
+
+reset_p: process is
+begin
+RST <= '1';
+wait for RST_HOLD_DURATION;
+wait until rising_edge(CLK);
+RST <= '0';
+wait;
+end process;
+
+end architecture;
+
