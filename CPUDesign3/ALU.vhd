@@ -4,7 +4,8 @@
 
 entity ALU is
     port(
-        i_setting, CLK, RST :in std_logic_vector(1 downto 0);
+        i_setting :in std_logic_vector(1 downto 0);
+        CLK, RST :in std_logic;
         i_dataA, i_DataB :in STD_LOGIC_VECTOR(15 downto 0);
         o_data :out STD_LOGIC_VECTOR(15 downto 0)
     );

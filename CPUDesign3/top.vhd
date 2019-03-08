@@ -97,8 +97,7 @@ architecture behavior of top is
 
     --REGISTERS
     signal regA, regB, regD : STD_LOGIC_VECTOR(15 downto 0);
-    signal destAddr : STD_LOGIC_VECTOR(3 downto 0);
-    signal constValue : STD_LOGIC;
+    signal destAddr, constValue : STD_LOGIC_VECTOR(3 downto 0);
 
 
     --CONTROL
