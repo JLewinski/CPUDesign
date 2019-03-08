@@ -36,6 +36,14 @@
       <ParsingOptions>FullParse</ParsingOptions>
       <NotificationLevel>All</NotificationLevel>
     </Content>
+    <Content Include="FullMemory.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
     <Content Include="hello.vhd">
       <SubType>Content</SubType>
       <NeedsCodeFormatting>true</NeedsCodeFormatting>

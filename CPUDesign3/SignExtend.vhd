@@ -10,7 +10,7 @@ entity SignExtend is
     );
     port(
         dataIn :in STD_LOGIC_VECTOR(inputWidth - 1 downto 0);
-        CLK :in STD_LOGIC;
+        CLK, RST :in STD_LOGIC;
         dataOut :out STD_LOGIC_VECTOR(outputWidth - 1 downto 0)
     );
 end entity;
@@ -20,8 +20,12 @@ begin
     process(CLK)
     begin
         if rising_edge(CLK) then
-            dataOut(outputWidth - 1 downto inputWidth) <= (others => dataIn(inputWidth - 1));
-            dataOut(inputWidth - 1 downto 0) <= dataIn;
+            if RST = '1' then
+                dataOut <= (others => '0');
+            else
+                dataOut(outputWidth - 1 downto inputWidth) <= (others => dataIn(inputWidth - 1));
+                dataOut(inputWidth - 1 downto 0) <= dataIn;
+            end if;
         end if;
     end process;
 end architecture behavior;
