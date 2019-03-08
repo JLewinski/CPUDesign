@@ -3,23 +3,19 @@
     use IEEE.NUMERIC_STD.all;
 
 entity RegisterMemory is
-    generic (
-        DATA_WIDTH        : integer := 16;
-        ADDRESS_WIDTH    : integer := 4
-    );
     port ( 
-        DataIn                          : in  STD_LOGIC_VECTOR (DATA_WIDTH - 1 downto 0);
-        SourceA, SourceB, DestAddr      : in  STD_LOGIC_VECTOR (ADDRESS_WIDTH - 1 downto 0);
+        DataIn                          : in  STD_LOGIC_VECTOR (15 downto 0);
+        SourceA, SourceB, DestAddr, inr : in  STD_LOGIC_VECTOR (3 downto 0);
         WriteEn, CLK, RST               : in  STD_LOGIC;
-        DataOutA, DataOutB              : out STD_LOGIC_VECTOR (DATA_WIDTH - 1 downto 0)
+        DataOutA, DataOutB, outValue    : out STD_LOGIC_VECTOR (15 downto 0)
     );
 end RegisterMemory;
 
 architecture Behavioral of RegisterMemory is
-    type Memory_Array is array ((2 ** ADDRESS_WIDTH) - 1 downto 0) of STD_LOGIC_VECTOR (DATA_WIDTH - 1 downto 0);
+    type Memory_Array is array ((2 ** 4) - 1 downto 0) of STD_LOGIC_VECTOR (15 downto 0);
     signal Memory : Memory_Array;
 begin
-
+    outValue <= Memory(to_integer(unsigned(inr)));
     -- Read process
     process (CLK)
     begin
