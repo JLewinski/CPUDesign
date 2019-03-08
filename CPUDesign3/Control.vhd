@@ -1,5 +1,5 @@
 library ieee;
-    use ieee.std_logic_1164.all;
+use ieee.std_logic_1164.all;
 
 entity Control is
     port(
@@ -46,5 +46,5 @@ begin
                             "000000000" when others;
         end if;
     end process;
-        
+
 end architecture;

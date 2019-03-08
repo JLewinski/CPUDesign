@@ -45,6 +45,14 @@
       <ParsingOptions>FullParse</ParsingOptions>
       <NotificationLevel>All</NotificationLevel>
     </Content>
+    <Content Include="Memory.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
     <Content Include="Mux_2_To_1.vhd">
       <SubType>Content</SubType>
       <LibraryName>work</LibraryName>
@@ -53,7 +61,31 @@
       <ParsingOptions>FullParse</ParsingOptions>
       <NotificationLevel>All</NotificationLevel>
     </Content>
+    <Content Include="Register16.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
     <Content Include="RegisterMemory.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
+    <Content Include="SignExtend.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
+    <Content Include="top.vhd">
       <SubType>Content</SubType>
       <LibraryName>work</LibraryName>
       <ContentTypeProperty>Vhdl</ContentTypeProperty>
