@@ -11,15 +11,14 @@ end entity;
 
 architecture rtl_sim of tb_ALU is
 
-    constant CLK_PERIOD: time := 40 ns;
-    constant RST_HOLD_DURATION: time := 200 ns;
+    constant CLK_PERIOD: time := 10 ns;
+    constant RST_HOLD_DURATION: time := 20 ns;
     signal SEL: std_logic_vector(1 downto 0);
     signal CLK: std_logic;
     signal RST: std_logic;
     signal i_dataA: STD_LOGIC_VECTOR(15 downto 0);
     signal i_dataB: STD_LOGIC_VECTOR(15 downto 0);
     signal o_data: STD_LOGIC_VECTOR(15 downto 0);
-    signal output: STD_LOGIC_VECTOR(15 downto 0);
 
 begin
     --testOutput <= o_data;
@@ -37,36 +36,39 @@ begin
     begin
         wait until falling_edge(RST);
         wait until falling_edge(CLK);
-        
+
         for i in 0 to 3 loop
             SEL <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 2));
-            for j in 0 to 5 loop
-                i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(j * 3, 16));
-                for k in 0 to 5 loop
-                    i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(k * 3 + 1, 16));
-                    wait until falling_edge(CLK);
-                    output <= o_data;
-                end loop;
-            end loop;
-            for j in 16#FFFF# downto 16#FFF0# loop
-                i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(j, 16));
-                for k in 0 to 5 loop
-                    i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(k * 3 + 1, 16));
-                    wait until falling_edge(CLK);
-                end loop;
-            end loop;
-            for j in 16#FFFF# downto 16#FFF0# loop
-                i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(j, 16));
-                for k in 16#FFFF# downto 16#FFF0# loop
-                    i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(k - 4, 16));
-                    wait until falling_edge(CLK);
-                end loop;
-            end loop;
+
+            i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(0, 16));
+            i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(0, 16));
+            wait until falling_edge(CLK);
+
+            i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#FFFF#, 16));
+            i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(0, 16));
+            wait until falling_edge(CLK);
+
+            i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(0, 16));
+            i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#FFFF#, 16));
+            wait until falling_edge(CLK);
+
+            i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#FF00#, 16));
+            i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#FF00#, 16));
+            wait until falling_edge(CLK);
+
+            i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#00FF#, 16));
+            i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#00FF#, 16));
+            wait until falling_edge(CLK);
+
+            i_dataA <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#FF0F#, 16));
+            i_dataB <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#0A4F#, 16));
+            wait until falling_edge(CLK);
+
         end loop;
-        
+
         wait for CLK_PERIOD;
-        
-        
+
+
         wait;
     end process;
 

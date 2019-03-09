@@ -36,10 +36,10 @@ begin
                     when "0010" => ctrlOutput <= "000001110";
                     when "0011" => ctrlOutput <= "000001111";
                     when "0100" => ctrlOutput <= "001011000";
-                    when "0101" => ctrlOutput <= "00X110X00";
+                    when "0101" => ctrlOutput <= "000110000";
                     when "0110" => ctrlOutput <= "000011100";
-                    when "1000" => ctrlOutput <= "01X010X01";
-                    when "1001" => ctrlOutput <= "10X0X0XXX";
+                    when "1000" => ctrlOutput <= "010010001";
+                    when "1001" => ctrlOutput <= "100000000";
                     when others => ctrlOutput <= "000000000";
                 end case;
             end if;

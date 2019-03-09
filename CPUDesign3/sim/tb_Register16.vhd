@@ -33,18 +33,24 @@ begin
     begin
         WE <= '0';
         dataIn <= (others => '0');
-        
+
         wait until falling_edge(RST);
         wait until falling_edge(CLK);
-        
-        for i in 2 ** 16 - 1 downto 0 loop
+
+        for i in 16#FFFF# downto 16#FFFa# loop
             WE <= '0';
             dataIn <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 16));
             wait until falling_edge(CLK);
             WE <= '1';
             wait until falling_edge(CLK);
         end loop;
-        
+        for i in 0 to 6 loop
+            WE <= '0';
+            dataIn <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 16));
+            wait until falling_edge(CLK);
+            WE <= '1';
+            wait until falling_edge(CLK);
+        end loop;
         wait;
     end process;
 

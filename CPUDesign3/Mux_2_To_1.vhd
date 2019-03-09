@@ -16,10 +16,14 @@ architecture behavior of Mux_2_To_1 is
 begin
     process(CLK) is
     begin
-        if RST = '0' then
+        if RST = '1' then
             o_Data <= (others => '0');
         elsif rising_edge(CLK) then
-            o_Data <= i_Data1 when SEL = '0' else i_Data2;
+            if SEL = '0' then
+                o_Data <= i_Data1;
+            else
+                o_Data <= i_Data2;
+            end if;
         end if;
     end process;
 end architecture behavior;

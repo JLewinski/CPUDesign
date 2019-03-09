@@ -38,19 +38,22 @@ begin
 
     stimuli_p: process is
     begin
+        SEL <= '0';
+        i_Data1 <= (others => '0');
+        i_Data2 <= (others => '0');
         wait until falling_edge(RST);
         wait until falling_edge(CLK);
-        
+
         for i in 0 to 2 ** d_WIDTH - 1 loop
             SEL <= '0';
             i_Data1 <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, d_WIDTH));
-            i_Data1 <= STD_LOGIC_VECTOR(TO_UNSIGNED(2 ** d_WIDTH - 1 - i, d_WIDTH));
-            wait until falling_edge(CLK);
-            
+            i_Data2 <= STD_LOGIC_VECTOR(TO_UNSIGNED(2 ** d_WIDTH - 1 - i, d_WIDTH));
+            wait for CLK_PERIOD * 2;
+
             SEL <= '1';
-            wait until falling_edge(CLK);
+            wait for CLK_PERIOD * 2;
         end loop;
-        
+
         wait;
     end process;
 

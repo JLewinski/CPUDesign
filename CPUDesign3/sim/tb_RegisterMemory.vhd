@@ -46,24 +46,40 @@ begin
         WriteEn <= '0';
         DataIn <= (others => '0');
         DestAddr <= (others => '0');
-        
+
         wait until falling_edge(RST);
         wait until falling_edge(CLK);
-        
+
         WriteEn <= '1';
-        for i in 0 to 16#FFFF# loop
+        for i in 0 to 16#F# loop
             DataIn <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 16));
-            DestAddr <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 16));
+            DestAddr <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 4));
             wait until falling_edge(CLK);
+            inr <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 4));
+            SourceA <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 4));
+            SourceB <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#FFFF# - i, 4));
         end loop;
+
         WriteEn <= '0';
-        for i in 0 to 16#FFFF# loop
-            inr <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 16));
-            SourceA <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 16));
-            SourceB <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#FFFF# - i, 16));
+        for i in 0 to 16#F# loop
+            inr <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 4));
+            SourceA <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 4));
+            SourceB <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#FFFF# - i, 4));
+            DataIn <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 16));
+            DestAddr <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 4));
             wait until falling_edge(CLK);
+            inr <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 4));
         end loop;
-        
+
+        WriteEn <= '1';
+        for i in 0 to 16#F# loop
+            DataIn <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#FFFF# - i, 16));
+            DestAddr <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 4));
+            wait until falling_edge(CLK);
+            inr <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 4));
+            SourceA <= STD_LOGIC_VECTOR(TO_UNSIGNED(i, 4));
+            SourceB <= STD_LOGIC_VECTOR(TO_UNSIGNED(16#FFFF# - i, 4));
+        end loop;
         wait;
     end process;
 
