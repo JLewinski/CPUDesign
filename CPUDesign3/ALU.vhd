@@ -12,10 +12,10 @@ entity ALU is
 end entity ALU;
 
 architecture behavior of ALU is
-    signal dataA, dataB : signed(15 downto 0);
+    signal dataA, dataB : unsigned(15 downto 0);
 begin
-    dataA <= signed(i_dataA);
-    dataB <= signed(i_dataB);
+    dataA <= unsigned(i_dataA);
+    dataB <= unsigned(i_dataB);
 
     process (CLK, SEL)
     begin
