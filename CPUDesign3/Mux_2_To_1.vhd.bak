@@ -1,4 +1,4 @@
-library ieee;
+﻿library ieee;
     use ieee.std_logic_1164.all;
 
 entity Mux_2_To_1 is

@@ -1,4 +1,4 @@
-library IEEE;
+﻿library IEEE;
     use IEEE.STD_LOGIC_1164.all;
     use IEEE.NUMERIC_STD.all;
     use IEEE.std_logic_arith.sxt;
@@ -9,7 +9,7 @@ entity top is
         inr :in STD_LOGIC_VECTOR(3 downto 0);
         readDataBus :in STD_LOGIC_VECTOR(15 downto 0);
         addressBus :out STD_LOGIC_VECTOR(9 downto 0);
-        outValue, output, writeDataBus, writeAddress :out STD_LOGIC_VECTOR(15 downto 0)
+        output, writeDataBus, writeAddress :out STD_LOGIC_VECTOR(15 downto 0)
     );
 end entity;
 
@@ -24,7 +24,7 @@ architecture behavior of top is
 
     component ALU is
         port(
-            RST :in std_logic;
+            CLK, RST :in std_logic;
             SEL :in std_logic_vector(1 downto 0);
             i_dataA, i_dataB :in STD_LOGIC_VECTOR(15 downto 0);
             o_data :out STD_LOGIC_VECTOR(15 downto 0);
@@ -89,7 +89,7 @@ architecture behavior of top is
     signal pcIn, pcOut, pcPlus4, pcALUOut, calcPC, pcExt : STD_LOGIC_VECTOR(15 downto 0);
 
     --Instruction
-    signal instruction, instructionExt, constantValue : STD_LOGIC_VECTOR(15 downto 0);
+    signal instruction, instructionExt : STD_LOGIC_VECTOR(15 downto 0);
 
     --REGISTERS
     signal regA, regB, regD : STD_LOGIC_VECTOR(15 downto 0);
@@ -107,11 +107,8 @@ architecture behavior of top is
     signal memOut : STD_LOGIC_VECTOR(15 downto 0);
 
 begin
-    
-    branch <= brCtrl and zero;
-    constantValue <= SXT(instruction(3 downto 0), 16);
-
     output <= pcOut;
+    branch <= brCtrl and zero;
 
     PC: Register16 port map(
         dataIn => pcIn,
@@ -137,7 +134,7 @@ begin
         selDest => selDest,
         aluOut => aluSetting);
 
-    DestRegMux: Mux_2_To_1 generic map(d_WIDTH => 4) port map(
+    DestRegMux: Mux_2_To_1 generic map(d_WIDTH => 16) port map(
         SEL => selDest,
         RST => RST,
         i_Data1 => instruction(7 downto 4),
@@ -155,17 +152,18 @@ begin
         RST => RST,
         DataOutA => regA,
         DataOutB => regB,
-        outValue => outValue);
+        outValue => output);
 
     ALUMux: Mux_2_To_1 generic map(d_WIDTH => 16) port map(
         SEL => ri,
         RST => RST,
         i_Data1 => regB,
-        i_Data2 => constantValue,
+        i_Data2 => SXT(instruction(3 downto 0), 16),
         o_Data => aluIn2);
 
     FullALU: ALU port map(
         SEL => aluSetting,
+        CLK => CLK,
         RST => RST,
         i_dataA => regA,
         i_dataB => aluIn2,
@@ -193,6 +191,7 @@ begin
 
     AddressAdder : ALU port map(
         SEL => "00",
+        CLK => CLK,
         RST => RST,
         i_dataA => instructionExt,
         i_dataB => pcPlus4,
@@ -200,9 +199,10 @@ begin
 
     PCAdder : ALU port map(
         SEL => "00",
+        CLK => CLK,
         RST => RST,
         i_dataA => pcOut,
-        i_dataB => X"0004",
+        i_dataB => "100",
         o_data => pcPlus4);
 
     PCCalcMux: Mux_2_To_1 generic map(d_WIDTH => 16) port map(

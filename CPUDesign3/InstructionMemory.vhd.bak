@@ -1,0 +1,47 @@
+﻿library IEEE;
+    use IEEE.STD_LOGIC_1164.all;
+    use IEEE.NUMERIC_STD.all;
+
+entity InstructionMemory is
+    port ( 
+        Reset     : in  STD_LOGIC;
+        Address    : in  STD_LOGIC_VECTOR (15 downto 0);
+        DataOut     : out STD_LOGIC_VECTOR (15 downto 0)
+    );
+end InstructionMemory;
+
+architecture Behavioral of InstructionMemory is
+    type Memory_Array is array ((2 ** 16) - 1 downto 0) of STD_LOGIC_VECTOR (15 downto 0);
+    signal Memory : Memory_Array;
+begin
+
+    -- Read process
+    process (Reset, Address)
+    begin
+        if Reset = '1' then
+            -- Clear DataOut on Reset
+            DataOut <= (others => '0');
+            -- Clear Memory on Reset
+            for i in Memory'Range loop
+                Memory(i) <= (others => '1');
+            end loop;
+            
+            --Put default values in memory
+            Memory(0) <= X"0000";
+            Memory(1) <= X"6107";
+            Memory(2) <= X"6203";
+            Memory(3) <= X"1412";
+            Memory(4) <= X"2514";
+            Memory(5) <= X"3614";
+            Memory(6) <= X"3710";
+            Memory(7) <= X"8103";
+            Memory(8) <= X"611F";
+            Memory(9) <= X"9002";
+            Memory(10) <= X"FFFF";
+            
+        else
+            DataOut <= Memory(to_integer(unsigned(Address)));
+        end if;
+    end process;
+
+end Behavioral;

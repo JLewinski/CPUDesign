@@ -1,4 +1,4 @@
-library IEEE;
+﻿library IEEE;
     use IEEE.STD_LOGIC_1164.all;
     use IEEE.NUMERIC_STD.all;
 
@@ -37,7 +37,7 @@ begin
                     Memory(i) <= (others => '0');
                 end loop;
             else
-                if WE = '1' then
+                if WE then
                     Memory(to_integer(unsigned(DataAddr))) <= DataIn;
                 end if;
             end if;

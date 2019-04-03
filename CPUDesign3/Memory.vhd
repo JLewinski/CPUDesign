@@ -20,20 +20,18 @@ architecture Behavioral of Memory is
 begin
 
     -- Read process
-    process (CLK)
+    process (Reset, WriteEn, DataIn, Address)
     begin
-        if rising_edge(CLK) then
-            if Reset = '1' then
-                -- Clear DataOut on Reset
-                DataOut <= (others => '0');
-            elsif Enable = '1' then
-                if WriteEn = '1' then
-                    -- If WriteEn then pass through DIn
-                    DataOut <= DataIn;
-                else
-                    -- Otherwise Read Memory
-                    DataOut <= Memory(to_integer(unsigned(Address)));
-                end if;
+        if Reset = '1' then
+            -- Clear DataOut on Reset
+            DataOut <= (others => '0');
+        elsif Enable = '1' then
+            if WriteEn = '1' then
+                -- If WriteEn then pass through DIn
+                DataOut <= DataIn;
+            else
+                -- Otherwise Read Memory
+                DataOut <= Memory(to_integer(unsigned(Address)));
             end if;
         end if;
     end process;
@@ -41,18 +39,14 @@ begin
     -- Write process
     process (CLK)
     begin
-        if rising_edge(CLK) then
-            if Reset = '1' then
-                -- Clear Memory on Reset
-                for i in Memory'Range loop
-                    Memory(i) <= (others => '0');
-                end loop;
-            elsif Enable = '1' then
-                if WriteEn = '1' then
-                    -- Store DataIn to Current Memory Address
-                    Memory(to_integer(unsigned(Address))) <= DataIn;
-                end if;
-            end if;
+        if Reset = '1' then
+            -- Clear Memory on Reset
+            for i in Memory'Range loop
+                Memory(i) <= (others => '0');
+            end loop;
+        elsif CLK = '1' and Enable = '1' and WriteEn = '1' then
+            -- Store DataIn to Current Memory Address
+            Memory(to_integer(unsigned(Address))) <= DataIn;
         end if;
     end process;
 
