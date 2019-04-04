@@ -44,6 +44,14 @@
       <ParsingOptions>FullParse</ParsingOptions>
       <NotificationLevel>All</NotificationLevel>
     </Content>
+    <Content Include="InstructionMemory.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
     <Content Include="Memory.vhd">
       <SubType>Content</SubType>
       <LibraryName>work</LibraryName>
@@ -117,6 +125,14 @@
       <NotificationLevel>All</NotificationLevel>
     </Content>
     <Content Include="sim\tb_RegisterMemory.vhd">
+      <SubType>Content</SubType>
+      <LibraryName>work</LibraryName>
+      <ContentTypeProperty>Vhdl</ContentTypeProperty>
+      <NamingCheck>True</NamingCheck>
+      <ParsingOptions>FullParse</ParsingOptions>
+      <NotificationLevel>All</NotificationLevel>
+    </Content>
+    <Content Include="sim\tb_top.vhd">
       <SubType>Content</SubType>
       <LibraryName>work</LibraryName>
       <ContentTypeProperty>Vhdl</ContentTypeProperty>
