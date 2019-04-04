@@ -36,7 +36,7 @@ architecture behavior of top is
         port(
             instruction :in std_logic_vector (3 downto 0);
             RST :in std_logic;
-            jump, branch, mem2Reg, memW, ri, regW, selDest :out std_logic;
+            jump, branch, mem2Reg, memW, ri, regW, selDest, halt :out std_logic;
             aluOut : out std_logic_vector(1 downto 0)
         );
     end component;
@@ -97,7 +97,7 @@ architecture behavior of top is
 
 
     --CONTROL
-    signal jump, brCtrl, mem2Reg, memW, ri, regW, selDest, zero, branch : std_logic;
+    signal jump, brCtrl, mem2Reg, memW, ri, regW, selDest, zero, branch, HALT : std_logic;
     signal aluSetting : std_logic_vector(1 downto 0);
 
     --ALU
@@ -107,16 +107,16 @@ architecture behavior of top is
     signal memOut : STD_LOGIC_VECTOR(15 downto 0);
 
 begin
-    
+
     branch <= brCtrl and zero;
     constantValue <= SXT(instruction(3 downto 0), 16);
 
-    output <= pcOut;
+    output <= instruction;
 
     PC: Register16 port map(
         dataIn => pcIn,
         CLK => CLK,
-        WE => '1',
+        WE => HALT,
         RST => RST,
         dataOut => pcOut);
 
@@ -135,7 +135,8 @@ begin
         ri => ri,
         regW => regW,
         selDest => selDest,
-        aluOut => aluSetting);
+        aluOut => aluSetting,
+        halt => HALT);
 
     DestRegMux: Mux_2_To_1 generic map(d_WIDTH => 4) port map(
         SEL => selDest,

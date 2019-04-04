@@ -29,14 +29,14 @@ begin
     end process;
     
     --inr process
-    process (RST, inr)
-    begin
-        if RST = '1' then
-            outValue <= (others => '0');
-        else
-            outValue <= Memory(to_integer(unsigned(inr)));
-        end if;
-    end process;
+    --process (RST, inr)
+    --begin
+    --    if RST = '1' then
+    --        outValue <= (others => '0');
+    --    else
+    --        outValue <= Memory(to_integer(unsigned(inr)));
+    --    end if;
+    --end process;
 
     -- Write process
     process (CLK, WriteEn, RST, DestAddr, DataIn)
@@ -46,14 +46,16 @@ begin
                 Memory(i) <= (others => '0');
             end loop;
             outValue <= (others => '0');
-        elsif CLK = '1' and WriteEn = '1' then
+        elsif WriteEn = '1' then
             -- Store DataIn to Current Memory Address
-            Memory(to_integer(unsigned(DestAddr))) <= DataIn;
-            --if inr = DestAddr then
-            --    outValue <= DataIn;
-            --else
-            --    outValue <= Memory(to_integer(unsigned(inr)));
-            --end if;
+            if CLK = '1' then
+                Memory(to_integer(unsigned(DestAddr))) <= DataIn;
+            end if;
+            if inr = DestAddr then
+                outValue <= DataIn;
+            else
+                outValue <= Memory(to_integer(unsigned(inr)));
+            end if;
         end if;
     end process;
 

@@ -29,7 +29,6 @@ begin
         )
         port map (
             SEL     => SEL,
-            CLK     => CLK,
             RST     => RST,
             i_Data1 => i_Data1,
             i_Data2 => i_Data2,

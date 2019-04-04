@@ -30,7 +30,6 @@ begin
     Control_inst: entity work.Control
         port map (
             instruction => instruction,
-            CLK         => CLK,
             RST         => RST,
             jump        => jump,
             branch      => branch,
