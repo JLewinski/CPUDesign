@@ -17,6 +17,7 @@ end Memory;
 architecture Behavioral of Memory is
     type Memory_Array is array ((2 ** 16) - 1 downto 0) of STD_LOGIC_VECTOR (15 downto 0);
     signal Memory : Memory_Array;
+    
 begin
 
     -- Read process
@@ -27,7 +28,7 @@ begin
             DataOut <= (others => '0');
         elsif Enable = '1' then
             if WriteEn = '1' then
-                -- If WriteEn then pass through DIn
+                -- If WriteEn then pass through DataIn
                 DataOut <= DataIn;
             else
                 -- Otherwise Read Memory

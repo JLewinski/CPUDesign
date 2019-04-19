@@ -18,7 +18,6 @@ begin
     -- Read process
     process (RST, SourceA, SourceB)
     begin
-        --outValue <= Memory(to_integer(unsigned(inr)));
         if RST = '1' then
             DataOutA <= (others => '0');
             DataOutB <= (others => '0');
@@ -28,16 +27,6 @@ begin
         end if;
     end process;
     
-    --inr process
-    --process (RST, inr)
-    --begin
-    --    if RST = '1' then
-    --        outValue <= (others => '0');
-    --    else
-    --        outValue <= Memory(to_integer(unsigned(inr)));
-    --    end if;
-    --end process;
-
     -- Write process
     process (CLK, WriteEn, RST, DestAddr, DataIn)
     begin

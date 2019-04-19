@@ -21,6 +21,7 @@ architecture rtl_sim of tb_top is
     signal writeDataBus: STD_LOGIC_VECTOR(15 downto 0);
     signal writeAddress: STD_LOGIC_VECTOR(15 downto 0);
     signal enabled: STD_LOGIC := '0';
+    signal loadProcess: STD_LOGIC := '0';
     signal s0, s1, s2, s3, s4, s5, s6, s7 : integer;
 begin
 
@@ -69,6 +70,8 @@ begin
             --check instructions
             --ADC s1 s0 s7
 
+            wait for CLK_PERIOD;
+
             wait until falling_edge(CLK);
 
             inr <= X"1";
@@ -95,6 +98,9 @@ begin
         end if;
         if output = X"FFFF" then
             report "DONE";
+            enabled <= '0';
+            wait for CLK_PERIOD * 4;
+            wait until falling_edge(CLK);
         else
 
             --s1 = 7
@@ -150,39 +156,46 @@ begin
                 report "S5 != s1 | s4"
                 severity FAILURE;
 
-            --OR s7 s1 s0
-            s7 <= to_integer(to_signed(s1, 16) or to_signed(s0, 16));
-            wait until falling_edge(CLK);
+            
+            wait for CLK_PERIOD * 4;
 
-            inr <= X"7";
+            if loadProcess = '0' then
+                wait for CLK_PERIOD;
 
-            wait until rising_edge(CLK);
-            wait for 1 ns;
+                --OR s7 s1 s0
+                s7 <= to_integer(to_signed(s1, 16) or to_signed(s0, 16));
+                wait until falling_edge(CLK);
 
-            assert outValue = std_logic_vector(to_signed(s7, 16))
-                report "S7 != s1 | s0"
-                severity FAILURE;
+                inr <= X"7";
 
-            --BEZ s1 done
-            wait until falling_edge(CLK);
-            wait until rising_edge(CLK);
+                wait until rising_edge(CLK);
+                wait for 1 ns;
 
-            --ADC s1 s1 -1
-            s1 <= s1 - 1;
-            wait until falling_edge(CLK);
+                assert outValue = std_logic_vector(to_signed(s7, 16))
+                    report "S7 != s1 | s0"
+                    severity FAILURE;
 
-            inr <= X"1";
+                --BEZ s1 done
+                wait until falling_edge(CLK);
+                wait until rising_edge(CLK);
 
-            wait until rising_edge(CLK);
-            wait for 1 ns;
+                --ADC s1 s1 -1
+                s1 <= s1 - 1;
+                wait until falling_edge(CLK);
 
-            assert outValue = std_logic_vector(to_signed(s1, 16))
-                report "S1 != s1 - 1"
-                severity FAILURE;
+                inr <= X"1";
 
-            --J loop
-            wait until falling_edge(CLK);
-            wait until rising_edge(CLK);
+                wait until rising_edge(CLK);
+                wait for 1 ns;
+
+                assert outValue = std_logic_vector(to_signed(s1, 16))
+                    report "S1 != s1 - 1"
+                    severity FAILURE;
+
+                --J loop
+                wait until falling_edge(CLK);
+                wait until rising_edge(CLK);
+            end if;
         end if;
 
     end process;

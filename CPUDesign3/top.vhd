@@ -86,7 +86,7 @@ architecture behavior of top is
     end component;
 
     --PC
-    signal pcIn, pcOut, pcPlus4, pcALUOut, calcPC, pcExt : STD_LOGIC_VECTOR(15 downto 0);
+    signal pcIn, pcOut, pcPlus2, pcALUOut, calcPC, pcExt : STD_LOGIC_VECTOR(15 downto 0);
 
     --Instruction
     signal instruction, instructionExt, constantValue : STD_LOGIC_VECTOR(15 downto 0);
@@ -173,14 +173,14 @@ begin
         o_data => aluResult,
         zero => zero);
 
-    --DataMemory: Memory port map(
-    --    CLK => CLK,
-    --    Reset => RST,
-    --    DataIn => regB,
-    --    Address => aluResult,
-    --    WriteEn => memW,
-    --    Enable => '1',
-    --    DataOut => memOut);
+    DataMemory: Memory port map(
+       CLK => CLK,
+       Reset => RST,
+       DataIn => regB,
+       Address => aluResult,
+       WriteEn => memW,
+       Enable => '1',
+       DataOut => memOut);
 
     DataMux : Mux_2_To_1 generic map(d_WIDTH => 16) port map(
         SEL => mem2Reg,
@@ -189,33 +189,33 @@ begin
         i_Data2 => memOut,
         o_Data => regD);
 
-    instructionExt(15 downto 2) <= SXT(instruction(7 downto 0), 14);
-    instructionExt(1 downto 0) <= "00";
+    instructionExt(15 downto 1) <= SXT(instruction(7 downto 0), 15);
+    instructionExt(0) <= '0';
 
     AddressAdder : ALU port map(
         SEL => "00",
         RST => RST,
         i_dataA => instructionExt,
-        i_dataB => pcPlus4,
+        i_dataB => pcPlus2,
         o_data => pcALUOut);
 
     PCAdder : ALU port map(
         SEL => "00",
         RST => RST,
         i_dataA => pcOut,
-        i_dataB => X"0004",
-        o_data => pcPlus4);
+        i_dataB => X"0002",
+        o_data => pcPlus2);
 
     PCCalcMux: Mux_2_To_1 generic map(d_WIDTH => 16) port map(
         SEL => branch,
         RST => RST,
-        i_Data1 => pcPlus4,
+        i_Data1 => pcPlus2,
         i_Data2 => pcALUOut,
         o_Data => calcPC);
 
-    pcExt(15 downto 14) <= pcPlus4(15 downto 14);
-    pcExt(13 downto 2) <= instruction(11 downto 0);
-    pcExt(1 downto 0) <= "00";
+    pcExt(15 downto 13) <= pcPlus2(15 downto 13);
+    pcExt(12 downto 1) <= instruction(11 downto 0);
+    pcExt(0) <= '0';
 
     PCMux : Mux_2_To_1 generic map(d_WIDTH => 16) port map(
         SEL => jump,
