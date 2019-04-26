@@ -1,0 +1,27 @@
+        adc s8 s0 0
+        adc s1 s0 7
+        adc s2 s0 3
+loop:   add s3 s1 s2 (loop)
+        sub s4 s1 s2
+        and s5 s1 s4
+        or s6 s1 s4
+        str s3 s8(0)
+        str s5 s8(2)
+        str s4 s8(1)
+        str s6 s8(3)
+        adc s8 s8 4
+        or s7 s1 s0
+        brz s7 ldp
+        adc s1 s1 -1
+        jmp loop
+ldp:    adc s2 s8 0
+        adc s8 s0 0
+lLoop:  ld s3 s8(0)
+        ld s4 s8(1)
+        ld s5 s8(2)
+        ld s6 s8(3)
+        adc s8 s8 4
+        sub s9 s2 s8
+        brz s9 fin
+        jmp lLoop
+        HALT (fin)

@@ -7,9 +7,7 @@ entity top is
     port(
         CLK, RST :in STD_LOGIC;
         inr :in STD_LOGIC_VECTOR(3 downto 0);
-        readDataBus :in STD_LOGIC_VECTOR(15 downto 0);
-        addressBus :out STD_LOGIC_VECTOR(9 downto 0);
-        outValue, output, writeDataBus, writeAddress :out STD_LOGIC_VECTOR(15 downto 0)
+        outValue :out STD_LOGIC_VECTOR(15 downto 0)
     );
 end entity;
 
@@ -110,8 +108,6 @@ begin
 
     branch <= brCtrl and zero;
     constantValue <= SXT(instruction(3 downto 0), 16);
-
-    output <= instruction;
 
     PC: Register16 port map(
         dataIn => pcIn,
